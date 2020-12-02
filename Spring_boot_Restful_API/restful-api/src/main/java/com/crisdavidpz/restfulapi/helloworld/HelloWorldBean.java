@@ -1,4 +1,4 @@
-package com.crisdavidpz.restfulapi;
+package com.crisdavidpz.restfulapi.helloworld;
 
 public class HelloWorldBean {
 	
