@@ -14,28 +14,30 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 public class UserResource {
-	
+
 	@Autowired
 	public UserDaoService userService;
-	
+
 	@GetMapping("/users")
-	public List<User> retrieveAllUsers(){
+	public List<User> retrieveAllUsers() {
 		return userService.findAll();
 	}
-	
+
 	@GetMapping("/users/{id}")
-	public User retrieveUser(@PathVariable int id){
-		return userService.findOneUser(id);
+	public User retrieveUser(@PathVariable int id) {
+		User user = userService.findOneUser(id); 
+		if (user == null) {
+			throw new UserNotFoundException("id-"+ id);
+		}
+		return user;
 	}
 
 	@PostMapping("/users")
 	public ResponseEntity<Object> createUser(@RequestBody User user) {
 		User saveUser = userService.save(user);
-		
-		URI location = ServletUriComponentsBuilder
-			.fromCurrentRequest()
-			.path("/{id}")
-			.buildAndExpand(saveUser.getId()).toUri();
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saveUser.getId())
+				.toUri();
 
 		return ResponseEntity.created(location).build();
 	}
