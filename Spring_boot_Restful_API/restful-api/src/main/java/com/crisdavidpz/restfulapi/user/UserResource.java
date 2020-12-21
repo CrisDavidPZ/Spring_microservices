@@ -30,7 +30,7 @@ public class UserResource {
 	public List<User> retrieveAllUsers() {
 		return userService.findAll();
 	}
-
+	
 	@GetMapping("/users/{id}")
 	public EntityModel<User> retrieveUser(@PathVariable int id) {
 		
@@ -54,17 +54,18 @@ public class UserResource {
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
 		User savedUser = userService.save(user);
 		
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(savedUser.getId()).toUri();
 			
 		return ResponseEntity.created(location).build();
 	}
 	
 	@DeleteMapping("/users/{id}")
-		public void deleteUser(@PathVariable int id) {
-			User user = userService.deleteUser(id); 
-			if (user == null) {
-				throw new UserNotFoundException("id-"+ id);
-			}
+	public void deleteUser(@PathVariable int id) {
+		User user = userService.deleteUser(id);
+		if (user == null) {
+			throw new UserNotFoundException("id-" + id);
 		}
+	}
 
 }
