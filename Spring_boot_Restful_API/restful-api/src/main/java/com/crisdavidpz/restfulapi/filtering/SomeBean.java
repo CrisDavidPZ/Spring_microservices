@@ -1,8 +1,8 @@
 package com.crisdavidpz.restfulapi.filtering;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
-@JsonIgnoreProperties(value = {"filter1", "filter2"})
+@JsonFilter("SomeBeanFilter")
 public class SomeBean {
 	
 	public String filter1;
