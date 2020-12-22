@@ -1,3 +1,3 @@
-INSERT INTO User VALUES (1,sysdate(), 'David');
-INSERT INTO User VALUES (2,sysdate(), 'Sol');
-INSERT INTO User VALUES (3,sysdate(), 'Angelica');
+INSERT INTO User VALUES (1001,sysdate(), 'David');
+INSERT INTO User VALUES (1002,sysdate(), 'Sol');
+INSERT INTO User VALUES (1003,sysdate(), 'Angelica');
