@@ -25,17 +25,17 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class UserJPAResource {
 	
 	@Autowired
-	public UserRepository useRepository;
+	public UserRepository userRepository;
 
 	@GetMapping("/jpa/users")
 	public List<User> retrieveAllUsers() {
-		return useRepository.findAll();
+		return userRepository.findAll();
 	}
 	
 	@GetMapping("/jpa/users/{id}")
 	public EntityModel<User> retrieveUser(@PathVariable int id) {
 		
-		Optional<User> user = useRepository.findById(id);
+		Optional<User> user = userRepository.findById(id);
 		String rel = "All-users";
 		
 		if (!user.isPresent()) {
@@ -53,7 +53,7 @@ public class UserJPAResource {
 
 	@PostMapping("/jpa/users")
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
-		User savedUser = useRepository.save(user);
+		User savedUser = userRepository.save(user);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(savedUser.getId()).toUri();
@@ -63,7 +63,26 @@ public class UserJPAResource {
 	
 	@DeleteMapping("/jpa/users/{id}")
 	public void deleteUser(@PathVariable int id) {
-		useRepository.deleteById(id);
+		userRepository.deleteById(id);
+	}
+	
+	@GetMapping("/jpa/users/{id}/posts")
+	public List<Post> retrieveAllPostsByUser(@PathVariable int id) {
+		
+		Optional<User> user = userRepository.findById(id);
+//		String rel = "All-users";
+		
+		if (!user.isPresent()) {
+			throw new UserNotFoundException("id-"+ id);
+		}
+		
+//		EntityModel<List<Post>> resource = EntityModel.of(user.get().getPost());
+//		
+//		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+//		
+//		resource.add(linkTo.withRel(rel));
+		
+		return user.get().getPost();
 	}
 
 }
