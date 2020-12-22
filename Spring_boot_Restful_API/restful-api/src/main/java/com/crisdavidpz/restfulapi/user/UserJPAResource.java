@@ -23,9 +23,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 public class UserJPAResource {
-
-	@Autowired
-	public UserDaoService userService;
 	
 	@Autowired
 	public UserRepository useRepository;
